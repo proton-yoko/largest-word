@@ -1,33 +1,59 @@
 #include <fstream>
 #include <iostream>
-#include <string>
+#include <ctype.h>
 
 using namespace std;
 
 int main(){
 
-	cout << "アナグラムに使う１６文字の英字を入力してください";
+	// "アナグラムに使う１６文字の英字を入力してください"
+	char letters[17] = "iamveryhungrynow";
+	int abcnum[256];
+	int i;
 
-	string letters;//ここに16文字入れる
-	cin >> letters ;
+	//lettersとして与えられた各アルファベット数を数える
+	for(i='a'; i<='z'; i++){
+		abcnum[i]=0;
+	}
+	for(i=0; i<16; i++){
+		abcnum[letters[i]]++;
+	}
 
 
-
-	ifstream ifs("words");
-	char word[50];
-	char longest[50];
+	ifstream ifs("sortedwords.txt");
+	char word[32];
+	char longest[32];
 	if(ifs.fail()){
 		cerr << "ファイル読み込みに失敗" << endl;
 		return -1;
 	}
 
-	while(ifs.getline(word, 50-1)){
-		
+	while(ifs.getline(word, 32)){
+		int yet = 0;
+	//ここまではうまくいってるっぽい
+	
+		for(i=0; i<=strlen(word); i++){
+			abcnum[tolower(word[i])]--;
+			if(abcnum[word[i]]<0){
+				yet=1;
+				break;
+			}
+		}
+		if(yet == 0){
+			//cout << "見つけた！" << endl;
+			for(int k=0; k<=strlen(word); k++){
+				longest[k] = word[k];
+				break;
+			}
+		}
 	}
 
 
-
-	cout << "一番長い単語は[" << longest << "]" << endl;
+	cout << "一番長い単語は[" ;
+	for(i=0; i<strlen(longest); i++){
+		cout << longest[i] ;
+	}
+	cout << "]" << endl;
 
 	return 0;
 }

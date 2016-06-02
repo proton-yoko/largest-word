@@ -17,7 +17,7 @@ int main(){
 			dic[i][k] = w[k];
 		}
 
-		cout << dic[i] << endl;
+//		cout << dic[i] << endl;
 		i++;
 	}
 	int	numwords = i;
